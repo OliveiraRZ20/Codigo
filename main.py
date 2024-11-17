@@ -5,21 +5,23 @@ import sys
 
 # criacao e ajuste da janela
 win_main = Tk()
-win_main.title("Gerenciador de compromissos")
+win_main.title("Gerenciador de tarefas")
 win_main.resizable(False,False)
 win_main.configure(bg="white")
 win_main.iconbitmap(sys.executable)
 
-centralizar_janela(win_main,500,500)
+centralizar_janela(win_main,1500,450)
 
-tv = ttk.Treeview(win_main, columns=('id'), show='headings')
-tv.column('id',minwidth=0,width=100)
-tv.heading('id',text='ID')
+# criação da visualização da tabela
+tv = ttk.Treeview(win_main, columns=('titulo','data','prioridade','categoria','status'), show='headings')
+criar_coluna_ttk(tv,'titulo',0,125,'Título')
+criar_coluna_ttk(tv,'data',0,75,'Data')
+criar_coluna_ttk(tv,'prioridade',0,100,'Prioridade')
+criar_coluna_ttk(tv,'categoria',0,125,'Categoria')
+criar_coluna_ttk(tv,'status',0,100,'Status')
 tv.pack()
 
-tv.insert("","end",values=("10"))
-
-
+tv.insert("","end",values=["Dever de casa","17/10/2024","ALTA","Escola","Em andamento"])
 
 
 
