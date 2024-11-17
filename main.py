@@ -10,7 +10,7 @@ win_main.resizable(False,False)
 win_main.configure(bg="white")
 win_main.iconbitmap(sys.executable)
 
-centralizar_janela(win_main,1500,450)
+centralizar_janela(win_main,750,450)
 
 # criação da visualização da tabela
 tv = ttk.Treeview(win_main, columns=('titulo','data','prioridade','categoria','status'), show='headings')
