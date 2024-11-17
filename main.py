@@ -22,7 +22,7 @@ criar_coluna_ttk(tv,'status',0,100,'Status')
 tv.pack()
 
 tv.insert("","end",values=["Dever de casa","17/10/2024","ALTA","Escola","Em andamento"])
-
+sdoKODkoskdoaskdsoa
 
 
 # inicializa a janela principal
