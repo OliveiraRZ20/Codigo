@@ -40,5 +40,7 @@ butt_deleta = CTkButton(win_main, width=100, text="Deletar", font=("arial",20,"b
 butt_deleta.place(x=posicao_butts+450,y=250)
 
 tv.insert("","end",values=["Dever de casa","17/10/2024","ALTA","Escola","Em andamento"])
+tv.insert("","end",values=["Fazer o jantar","25/10/2024","MEDIA","Casa","Não iniciada"])
+
 
 win_main.mainloop()
