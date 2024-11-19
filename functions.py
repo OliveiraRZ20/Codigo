@@ -1,5 +1,5 @@
 from tkinter import *
-from tkinter import ttk
+from customtkinter import *
 
 def centralizar_janela(janela, largura: int, altura: int) -> None:
     tela_largura = janela.winfo_screenwidth()
@@ -12,3 +12,15 @@ def centralizar_janela(janela, largura: int, altura: int) -> None:
 def criar_coluna_ttk(dominio, nome: str, minwidth: int, width: int, titulo: str) -> None:
     dominio.column(nome,minwidth=minwidth,width=width)
     dominio.heading(nome,text=titulo)
+
+def criar_botao_ttk(dominio, width: int, text: str, tamanho_fonte: int, command ,e_negrito: bool = True) -> None:
+    if e_negrito:
+        butt = CTkButton(dominio, width=width, text=text, font=("arial",tamanho_fonte,"bold"), command=command)
+    else:
+        butt = CTkButton(dominio,width=width, text=text, font=("arial",tamanho_fonte), command=command)
+    return butt
+
+def inserir_tarefa() -> None:
+    win_inserir = CTkToplevel()
+    win_inserir.title("Inserir nova tarefa")
+    win_inserir.geometry("200x200")
