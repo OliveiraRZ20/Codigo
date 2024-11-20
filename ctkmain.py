@@ -13,7 +13,7 @@ win_main.title("Gerenciador de tarefas")
 win_main.resizable(False,False)
 win_main.iconbitmap(sys.executable)
 
-centralizar_janela(win_main,750,450)
+centralizar_janela(win_main,main_x,main_y)
 
 # criando e definindo parametros da planilha de tarefas
 style = ttk.Style(win_main)
@@ -34,17 +34,16 @@ posicao_butts = 100
 butt_insere = criar_botao_ttk(win_main,100,"Inserir",20,inserir_tarefa)
 butt_insere.place(x=posicao_butts,y=250)
 
-butt_atualiza = criar_botao_ttk(win_main,100,"Atualizar",20,inserir_tarefa)
+butt_atualiza = criar_botao_ttk(win_main,100,"Atualizar",20,atualizar_tarefa)
 butt_atualiza.place(x=posicao_butts+150,y=250)
 
-butt_exibe = criar_botao_ttk(win_main,100,"Exibir",20,inserir_tarefa)
+butt_exibe = criar_botao_ttk(win_main,100,"Exibir",20,exibir_tarefa)
 butt_exibe.place(x=posicao_butts+300,y=250)
 
-butt_deleta = criar_botao_ttk(win_main,100,"Deletar",20,inserir_tarefa)
+butt_deleta = criar_botao_ttk(win_main,100,"Deletar",20,deletar_tarefa)
 butt_deleta.place(x=posicao_butts+450,y=250)
 
 # tv.insert("","end",values=["Dever de casa","17/10/2024","ALTA","Escola","Em andamento"])
 # tv.insert("","end",values=["Fazer o jantar","25/10/2024","MEDIA","Casa","Não iniciada"])
-
 
 win_main.mainloop()
