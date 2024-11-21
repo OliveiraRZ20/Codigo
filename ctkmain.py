@@ -31,16 +31,16 @@ tv.place(x=100,y=0)
 # criando e localizando os botões de funcionalidade
 posicao_butts = 100
 
-butt_insere = criar_botao_ttk(win_main,100,"Inserir",20,inserir_tarefa)
+butt_insere = criar_botao_ttk(win_main,100,"Inserir",20,gerenciador.inserir_tarefa)
 butt_insere.place(x=posicao_butts,y=250)
 
-butt_atualiza = criar_botao_ttk(win_main,100,"Atualizar",20,atualizar_tarefa)
+butt_atualiza = criar_botao_ttk(win_main,100,"Atualizar",20,gerenciador.atualizar_tarefa)
 butt_atualiza.place(x=posicao_butts+150,y=250)
 
-butt_exibe = criar_botao_ttk(win_main,100,"Exibir",20,exibir_tarefa)
+butt_exibe = criar_botao_ttk(win_main,100,"Exibir",20,gerenciador.exibir_tarefa)
 butt_exibe.place(x=posicao_butts+300,y=250)
 
-butt_deleta = criar_botao_ttk(win_main,100,"Deletar",20,deletar_tarefa)
+butt_deleta = criar_botao_ttk(win_main,100,"Deletar",20,gerenciador.deletar_tarefa)
 butt_deleta.place(x=posicao_butts+450,y=250)
 
 # tv.insert("","end",values=["Dever de casa","17/10/2024","ALTA","Escola","Em andamento"])
