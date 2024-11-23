@@ -32,10 +32,10 @@ tv.place(x=100,y=0)
 # criando e localizando os botões de funcionalidade
 posicao_butts = 100
 
-butt_insere = criar_botao_ttk(win_main,100,"Inserir",20,gerenciador.inserir_tarefa)
+butt_insere = criar_botao_ttk(win_main,100,"Inserir",20,lambda: gerenciador.inserir_tarefa(tv))
 butt_insere.place(x=posicao_butts,y=250)
 
-butt_atualiza = criar_botao_ttk(win_main,100,"Atualizar",20,gerenciador.atualizar_tarefa)
+butt_atualiza = criar_botao_ttk(win_main,100,"Atualizar",20,lambda: gerenciador.atualizar_tarefa(tv))
 butt_atualiza.place(x=posicao_butts+150,y=250)
 
 butt_exibe = criar_botao_ttk(win_main,100,"Exibir",20,lambda: gerenciador.exibir_tarefa(tv))
@@ -43,9 +43,6 @@ butt_exibe.place(x=posicao_butts+300,y=250)
 
 butt_deleta = criar_botao_ttk(win_main,100,"Deletar",20,lambda: gerenciador.deletar_tarefa(tv))
 butt_deleta.place(x=posicao_butts+450,y=250)
-
-tv.insert("","end",values=["Dever de casa","17/10/2024","ALTA","Escola","Em andamento","Páginas 45,46,47 da parte de português"])
-tv.insert("","end",values=["Fazer o jantar","25/10/2024","MEDIA","Casa","Não iniciada","Fazer macarrão com carne moida"])
 
 # inicializa a janela
 win_main.mainloop()

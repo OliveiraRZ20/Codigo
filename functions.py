@@ -26,9 +26,9 @@ class Gerenciador():
     def __init__(self) -> None:
         self.tem_janela_aberta: bool = False
 
-    def inserir_tarefa(self) -> None:
+    def inserir_tarefa(self, treeview) -> None:
         if self.tem_janela_aberta:
-            pass
+            msgbox.showinfo("Aviso", "Já há uma janela aberta.")
         else:
             self.tem_janela_aberta = True
             win_insere = CTkToplevel()
@@ -74,26 +74,71 @@ class Gerenciador():
             box_entry_obs = CTkTextbox(win_insere,width=790,height=110)
             box_entry_obs.place(x=10,y=180)
             
-            butt_confirm = criar_botao_ttk(win_insere,100,"Confirmar",20,lambda: print(box_entry_prioridade.get()))
+            butt_confirm = criar_botao_ttk(win_insere,100,"Confirmar",20,lambda: self.inserir_treeview(win_insere,treeview,box_entry_titulo,box_entry_data,box_entry_prioridade,box_entry_categoria,box_entry_status,box_entry_obs))
             butt_confirm.place(x=695,y=10)
             
-    def atualizar_tarefa(self) -> None:
+    def atualizar_tarefa(self, treeview) -> None:
+        item_selecionado = treeview.selection()
         if self.tem_janela_aberta:
-            pass
+            msgbox.showinfo("Aviso", "Já há uma janela aberta.")
+        elif not item_selecionado:
+            msgbox.showerror("Erro: seleção inválida","Nenhum item foi selecionado, clique no item desejado...")
         else:
             self.tem_janela_aberta = True
             win_atualiza = CTkToplevel()
             win_atualiza.title("Atualizar Tarefa")
             # win_atualiza.resizable(False,False)
             centralizar_janela(win_atualiza,main_x,main_y)
-            win_atualiza.geometry("600x300")
+            win_atualiza.geometry("810x300")
             # comando para dar foco na janela Devido a bug do CTk
             win_atualiza.after(100, win_atualiza.lift)
             win_atualiza.protocol("WM_DELETE_WINDOW",lambda: self.gatilhar_fechamento(win_atualiza))
+            
+            items = treeview.item(item_selecionado, "values")
+            
+            label_titulo = CTkLabel(win_atualiza,text="Título:",font=("Arial",15))
+            label_titulo.place(x=10,y=70)
+            box_entry_titulo = CTkTextbox(win_atualiza,width=150,height=10)
+            box_entry_titulo.insert("0.0",items[0])
+            box_entry_titulo.place(x=10,y=100)
+            
+            label_data = CTkLabel(win_atualiza,text="Data:",font=("Arial",15))
+            label_data.place(x=170,y=70)
+            box_entry_data = CTkTextbox(win_atualiza,width=150,height=10)
+            box_entry_data.insert("0.0",items[1])
+            box_entry_data.place(x=170,y=100)
+            
+            label_prioridade = CTkLabel(win_atualiza,text="Prioridade:",font=("Arial",15))
+            label_prioridade.place(x=330,y=70)
+            box_entry_prioridade = CTkOptionMenu(win_atualiza,values=["Baixa","Média","Alta"])
+            box_entry_prioridade.set(items[2])
+            box_entry_prioridade.place(x=330,y=100)
+            
+            label_categoria = CTkLabel(win_atualiza,text="Categoria:",font=("Arial",15))
+            label_categoria.place(x=490,y=70)
+            box_entry_categoria = CTkTextbox(win_atualiza,width=150,height=10)
+            box_entry_categoria.insert("0.0",items[3])
+            box_entry_categoria.place(x=490,y=100)
+            
+            label_status = CTkLabel(win_atualiza,text="Status:",font=("Arial",15))
+            label_status.place(x=650,y=70)
+            box_entry_status = CTkOptionMenu(win_atualiza,values=["Não iniciada","Em andamento","Concluída"])
+            box_entry_status.set(items[4])
+            box_entry_status.place(x=650,y=100)
+            
+            label_obs = CTkLabel(win_atualiza,text="Observações:",font=("Arial",15))
+            label_obs.place(x=10,y=150)
+            box_entry_obs = CTkTextbox(win_atualiza,width=790,height=110)
+            box_entry_obs.insert("0.0",items[5])
+            box_entry_obs.place(x=10,y=180)
+            
+            butt_confirm = criar_botao_ttk(win_atualiza,100,"Confirmar",20,lambda: self.atualizar_treeview(win_atualiza,item_selecionado,treeview,box_entry_titulo,box_entry_data,box_entry_prioridade,box_entry_categoria,box_entry_status,box_entry_obs))
+            butt_confirm.place(x=695,y=10)
+            
 
     def exibir_tarefa(self,treeview) -> None:
         if self.tem_janela_aberta:
-            pass
+            msgbox.showinfo("Aviso", "Já há uma janela aberta.")
         else:
             item_selecionado = treeview.selection()
             if item_selecionado:
@@ -146,7 +191,7 @@ class Gerenciador():
 
     def deletar_tarefa(self,treeview) -> None:
         if self.tem_janela_aberta:
-            pass
+            msgbox.showinfo("Aviso", "Já há uma janela aberta.")
         else:
             item_selecionado = treeview.selection()
             if item_selecionado:
@@ -159,6 +204,16 @@ class Gerenciador():
     def gatilhar_fechamento(self, dominio):
         self.tem_janela_aberta = False
         dominio.destroy()
+    
+    def inserir_treeview(self,dominio,treeview,box_entry_titulo,box_entry_data,box_entry_prioridade,box_entry_categoria,box_entry_status,box_entry_obs) -> None:
+        insert = [box_entry_titulo.get("1.0","end").strip(),box_entry_data.get("1.0","end").strip(),box_entry_prioridade.get(),box_entry_categoria.get("1.0","end").strip(),box_entry_status.get(),box_entry_obs.get("1.0","end").strip()]
+        treeview.insert("","end",values=insert)
+        self.gatilhar_fechamento(dominio)
+    
+    def atualizar_treeview(self,dominio,item_selecionado,treeview,box_entry_titulo,box_entry_data,box_entry_prioridade,box_entry_categoria,box_entry_status,box_entry_obs) -> None:
+        insert = [box_entry_titulo.get("1.0","end").strip(),box_entry_data.get("1.0","end").strip(),box_entry_prioridade.get(),box_entry_categoria.get("1.0","end").strip(),box_entry_status.get(),box_entry_obs.get("1.0","end").strip()]
+        treeview.item(item_selecionado, values=insert)
+        self.gatilhar_fechamento(dominio)
         
 
 gerenciador = Gerenciador()
