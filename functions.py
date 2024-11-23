@@ -2,6 +2,7 @@ from customtkinter import *
 import tkinter.messagebox as msgbox
 
 def centralizar_janela(janela, largura: int, altura: int) -> None:
+    # centralizar qualquer janela criada pelo app em qualquer tela com um principio matemático
     tela_largura = janela.winfo_screenwidth()
     tela_altura = janela.winfo_screenheight()
     soma_x = ((tela_largura - largura) // 2) - 8
@@ -9,10 +10,12 @@ def centralizar_janela(janela, largura: int, altura: int) -> None:
     janela.geometry(f"{largura}x{altura}+{soma_x}+{soma_y}")
 
 def criar_coluna_ttk(dominio, nome: str, minwidth: int, width: int, titulo: str) -> None:
+    # cria uma coluna no ttk de maneira menos trabalhosa
     dominio.column(nome,minwidth=minwidth,width=width)
     dominio.heading(nome,text=titulo)
 
 def criar_botao_ttk(dominio, width: int, text: str, tamanho_fonte: int, command ,e_negrito: bool = True) -> None:
+    # cria um botão ttk de maneira menos trabalhosa
     if e_negrito:
         butt = CTkButton(dominio, width=width, text=text, font=("arial",tamanho_fonte,"bold"), command=command)
     else:
@@ -23,10 +26,13 @@ main_x = 750
 main_y = 450
 
 class Gerenciador():
+    # classe principal que vai gerenciar todas as funções do app em si
     def __init__(self) -> None:
+        # método de criação e atribuição de variáveis importantes
         self.tem_janela_aberta: bool = False
 
     def inserir_tarefa(self, treeview) -> None:
+        # janela para inserção de tarefas com funcionalidade implementada
         if self.tem_janela_aberta:
             msgbox.showinfo("Aviso", "Já há uma janela aberta.")
         else:
@@ -78,6 +84,7 @@ class Gerenciador():
             butt_confirm.place(x=695,y=10)
             
     def atualizar_tarefa(self, treeview) -> None:
+        # janela para atualização de alguma tarefa já existente no programa
         item_selecionado = treeview.selection()
         if self.tem_janela_aberta:
             msgbox.showinfo("Aviso", "Já há uma janela aberta.")
@@ -137,6 +144,7 @@ class Gerenciador():
             
 
     def exibir_tarefa(self,treeview) -> None:
+        # janela para exibição completa de alguma tarefa já existente incluindo as observações
         if self.tem_janela_aberta:
             msgbox.showinfo("Aviso", "Já há uma janela aberta.")
         else:
@@ -190,6 +198,7 @@ class Gerenciador():
             
 
     def deletar_tarefa(self,treeview) -> None:
+        # funcionalidade para deletar uma tarefa já existente
         if self.tem_janela_aberta:
             msgbox.showinfo("Aviso", "Já há uma janela aberta.")
         else:
@@ -202,15 +211,21 @@ class Gerenciador():
                 msgbox.showerror("Erro: seleção inválida","Nenhum item foi selecionado, clique no item desejado...")
     
     def gatilhar_fechamento(self, dominio):
+        # função utilizada como gatilho para notificar ao programa que não tem nenhuma
+        # janela aberta no momento
         self.tem_janela_aberta = False
         dominio.destroy()
     
     def inserir_treeview(self,dominio,treeview,box_entry_titulo,box_entry_data,box_entry_prioridade,box_entry_categoria,box_entry_status,box_entry_obs) -> None:
+        # função utilizada para captar os campos da janela de inserção e atribuir eles
+        # a uma linha do treeview principal na win_main
         insert = [box_entry_titulo.get("1.0","end").strip(),box_entry_data.get("1.0","end").strip(),box_entry_prioridade.get(),box_entry_categoria.get("1.0","end").strip(),box_entry_status.get(),box_entry_obs.get("1.0","end").strip()]
         treeview.insert("","end",values=insert)
         self.gatilhar_fechamento(dominio)
     
     def atualizar_treeview(self,dominio,item_selecionado,treeview,box_entry_titulo,box_entry_data,box_entry_prioridade,box_entry_categoria,box_entry_status,box_entry_obs) -> None:
+        # função utilizada para captar os campos da janela de atualização e atribuir eles
+        # a linha selecionada anteriormente na win_main
         insert = [box_entry_titulo.get("1.0","end").strip(),box_entry_data.get("1.0","end").strip(),box_entry_prioridade.get(),box_entry_categoria.get("1.0","end").strip(),box_entry_status.get(),box_entry_obs.get("1.0","end").strip()]
         treeview.item(item_selecionado, values=insert)
         self.gatilhar_fechamento(dominio)
