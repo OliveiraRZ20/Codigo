@@ -102,6 +102,8 @@ class Gerenciador():
             win_atualiza.protocol("WM_DELETE_WINDOW",lambda: self.gatilhar_fechamento(win_atualiza))
             
             items = treeview.item(item_selecionado, "values")
+            list_items = [i for i in items]
+            print(list_items)
             
             label_titulo = CTkLabel(win_atualiza,text="Título:",font=("Arial",15))
             label_titulo.place(x=10,y=70)
@@ -226,7 +228,8 @@ class Gerenciador():
     def atualizar_treeview(self,dominio,item_selecionado,treeview,box_entry_titulo,box_entry_data,box_entry_prioridade,box_entry_categoria,box_entry_status,box_entry_obs) -> None:
         # função utilizada para captar os campos da janela de atualização e atribuir eles
         # a linha selecionada anteriormente na win_main
-        insert = [box_entry_titulo.get("1.0","end").strip(),box_entry_data.get("1.0","end").strip(),box_entry_prioridade.get(),box_entry_categoria.get("1.0","end").strip(),box_entry_status.get(),box_entry_obs.get("1.0","end").strip()]
+        insert = [box_entry_titulo.get("1.0","end").strip(),box_entry_data.get("1.0","end").strip(),box_entry_prioridade.get(),box_entry_categoria.get("1.0","end").strip(),box_entry_status.get(),box_entry_obs.get("1.0","end").strip()]      
+        # print(f"itens novos: {insert}")
         treeview.item(item_selecionado, values=insert)
         self.gatilhar_fechamento(dominio)
         
