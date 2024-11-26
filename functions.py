@@ -1,5 +1,6 @@
 from customtkinter import *
 import tkinter.messagebox as msgbox
+from datetime import datetime
 
 def centralizar_janela(janela, largura: int, altura: int) -> None:
     # centralizar qualquer janela criada pelo app em qualquer tela com um principio matemático
@@ -102,8 +103,7 @@ class Gerenciador():
             win_atualiza.protocol("WM_DELETE_WINDOW",lambda: self.gatilhar_fechamento(win_atualiza))
             
             items = treeview.item(item_selecionado, "values")
-            list_items = [i for i in items]
-            print(list_items)
+            print([i for i in items])
             
             label_titulo = CTkLabel(win_atualiza,text="Título:",font=("Arial",15))
             label_titulo.place(x=10,y=70)
@@ -218,20 +218,47 @@ class Gerenciador():
         self.tem_janela_aberta = False
         dominio.destroy()
     
+    def capturar_e_validar_campos(self,box_entry_titulo,box_entry_data,box_entry_prioridade,box_entry_categoria,box_entry_status,box_entry_obs) -> list:
+        # atribuição de variaveis
+        titulo = box_entry_titulo.get("1.0","end").strip()
+        data = box_entry_data.get("1.0","end").strip()
+        prioridade = box_entry_prioridade.get()
+        categoria = box_entry_categoria.get("1.0","end").strip()
+        status = box_entry_status.get()
+        obs = box_entry_obs.get("1.0","end").strip()
+        
+        # validação de campos vazios
+        if not titulo or not data or not categoria:
+            msgbox.showerror("ERRO: Campo vazio","Todos os campos precisam estar preenchidos, por favor tente novamente")
+            return
+        # validação de data
+        try:
+            datetime.strptime(data, "%d/%m/%Y")
+        except ValueError:
+            msgbox.showerror("ERRO: Formato de data inválido", "Formato de data inválido. Use DD/MM/AAAA.")
+            return
+        
+        # criação da lista de campos validados
+        insert = [titulo,data,prioridade,categoria,status,obs]
+        return insert
+        
     def inserir_treeview(self,dominio,treeview,box_entry_titulo,box_entry_data,box_entry_prioridade,box_entry_categoria,box_entry_status,box_entry_obs) -> None:
         # função utilizada para captar os campos da janela de inserção e atribuir eles
         # a uma linha do treeview principal na win_main
-        insert = [box_entry_titulo.get("1.0","end").strip(),box_entry_data.get("1.0","end").strip(),box_entry_prioridade.get(),box_entry_categoria.get("1.0","end").strip(),box_entry_status.get(),box_entry_obs.get("1.0","end").strip()]
-        treeview.insert("","end",values=insert)
-        self.gatilhar_fechamento(dominio)
+        insert = self.capturar_e_validar_campos(box_entry_titulo,box_entry_data,box_entry_prioridade,box_entry_categoria,box_entry_status,box_entry_obs)
+        # verificando funcionamento da função capturar_e_valida_campos
+        if insert:
+            treeview.insert("","end",values=insert)
+            self.gatilhar_fechamento(dominio)
     
     def atualizar_treeview(self,dominio,item_selecionado,treeview,box_entry_titulo,box_entry_data,box_entry_prioridade,box_entry_categoria,box_entry_status,box_entry_obs) -> None:
         # função utilizada para captar os campos da janela de atualização e atribuir eles
         # a linha selecionada anteriormente na win_main
-        insert = [box_entry_titulo.get("1.0","end").strip(),box_entry_data.get("1.0","end").strip(),box_entry_prioridade.get(),box_entry_categoria.get("1.0","end").strip(),box_entry_status.get(),box_entry_obs.get("1.0","end").strip()]      
-        # print(f"itens novos: {insert}")
-        treeview.item(item_selecionado, values=insert)
-        self.gatilhar_fechamento(dominio)
+        insert = self.capturar_e_validar_campos(box_entry_titulo,box_entry_data,box_entry_prioridade,box_entry_categoria,box_entry_status,box_entry_obs)
+        # verificando funcionamento da função capturar_e_valida_campos
+        if insert:
+            treeview.item(item_selecionado, values=insert)
+            self.gatilhar_fechamento(dominio)
         
 
 gerenciador = Gerenciador()
