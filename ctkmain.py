@@ -44,8 +44,8 @@ butt_exibe.place(x=posicao_butts+300,y=250)
 butt_deleta = criar_botao_ttk(win_main,100,"Deletar",20,lambda: gerenciador.deletar_tarefa(tv))
 butt_deleta.place(x=posicao_butts+450,y=250)
 
-tv.insert("","end",values=["Dever de casa","17/10/2024","Alta","Escola","Em andamento","Páginas 45,46,47 do livro de matemática"])
-tv.insert("","end",values=["Fazer o jantar","25/10/2024","Média","Casa","Não iniciada","Macarrão com carne moída \nReceita no notas do telefone."])
+tv.insert("","end",values=["Dever de casa","20/12/2024","Alta","Escola","Em andamento","Páginas 45,46,47 do livro de matemática"])
+tv.insert("","end",values=["Fazer o jantar","30/11/2024","Média","Casa","Não iniciada","Macarrão com carne moída \nReceita no notas do telefone."])
 
 # inicializa a janela
 win_main.mainloop()
