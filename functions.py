@@ -12,7 +12,7 @@ def centralizar_janela(janela, largura: int, altura: int) -> None:
 
 def criar_coluna_ttk(dominio, nome: str, minwidth: int, width: int, titulo: str) -> None:
     # cria uma coluna no ttk de maneira menos trabalhosa
-    dominio.column(nome,minwidth=minwidth,width=width)
+    dominio.column(nome,minwidth=minwidth,width=width,stretch=False)
     dominio.heading(nome,text=titulo)
 
 def criar_botao_ttk(dominio, width: int, text: str, tamanho_fonte: int, command ,e_negrito: bool = True) -> None:
